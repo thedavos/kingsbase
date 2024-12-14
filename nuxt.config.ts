@@ -2,10 +2,6 @@ import { fileURLToPath } from 'node:url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-30',
-  // Nuxt 4 directory structure and features
-  // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
-  future: { compatibilityVersion: 4 },
   // Nuxt Modules
   // https://nuxt.com/modules
   modules: [
@@ -13,26 +9,19 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     'nuxt-auth-utils',
-    '@nuxt/eslint'
+    '@nuxt/eslint',
   ],
+  // Development
+  devtools: { enabled: true },
 
   alias: {
     server: fileURLToPath(new URL('./server/', import.meta.url)),
     root: fileURLToPath(new URL('./', import.meta.url)),
   },
-
-  hub: {
-    database: true,
-    kv: true,
-    blob: true,
-    cache: true,
-  },
-
-  hooks: {
-    'nitro:build:before'(nitro) {
-      nitro.options.moduleSideEffects.push('reflect-metadata');
-    },
-  },
+  // Nuxt 4 directory structure and features
+  // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
+  future: { compatibilityVersion: 4 },
+  compatibilityDate: '2024-07-30',
 
   nitro: {
     experimental: {
@@ -50,8 +39,19 @@ export default defineNuxtConfig({
       },
     },
   },
-  // Development
-  devtools: { enabled: true },
+
+  hub: {
+    database: true,
+    kv: true,
+    blob: true,
+    cache: true,
+  },
+
+  hooks: {
+    'nitro:build:before'(nitro) {
+      nitro.options.moduleSideEffects.push('reflect-metadata');
+    },
+  },
 
   // Development config
   eslint: {
@@ -62,4 +62,4 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+});
