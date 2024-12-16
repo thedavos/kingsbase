@@ -22,7 +22,6 @@
     "@nuxt/ui": "^2.20.0",
     "@nuxthub/core": "^0.8.8",
     "nuxt": "^3.14.1592",
-    "drizzle-kit": "^0.30.0",
     "drizzle-orm": "0.38.0",
     "h3-zod": "^0.5.3",
     "nuxt-auth-utils": "^0.5.6",
@@ -39,7 +38,8 @@
     "typescript": "5.7.2",
     "pino-pretty": "^13.0.0",
     "vue-tsc": "^2.1.10",
-    "wrangler": "3.95.0"
+    "wrangler": "3.95.0",
+    "drizzle-kit": "^0.30.0"
   },
   "packageManager": "pnpm@9.15.0"
 }
