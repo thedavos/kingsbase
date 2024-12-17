@@ -29,6 +29,9 @@ export default defineNuxtConfig({
       openAPI: true,
       tasks: true,
     },
+    plugins: [
+      'server/plugins/container',
+    ],
     esbuild: {
       options: {
         tsconfigRaw: {
