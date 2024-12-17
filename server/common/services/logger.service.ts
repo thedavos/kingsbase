@@ -1,26 +1,23 @@
 import 'reflect-metadata';
 import { singleton } from 'tsyringe';
-import pino from 'pino';
+import { createConsola } from 'consola/core';
+import type { ConsolaInstance } from 'consola/core';
 
 @singleton()
 export class LoggerService {
-  private logger: pino.Logger;
+  private logger: ConsolaInstance;
   private context?: string;
 
   constructor() {
-    this.logger = pino({
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          colorize: true,
-          translateTime: 'SYS:standard',
-          ignore: 'pid,hostname',
-        },
-      },
-    });
+    this.logger = createConsola({ formatOptions: {
+      columns: 80,
+      colors: true,
+      date: true,
+    } }).withTag('logger.service');
   }
 
   setContext(context: string) {
+    this.logger = this.logger.withTag(context);
     this.context = context;
     return this;
   }
@@ -35,7 +32,7 @@ export class LoggerService {
 
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   error(message: string, trace?: string, ...args: string[] | any[]) {
-    this.logger.error<Record<string, unknown>>(
+    this.logger.error(
       {
         msg: this.formatMessage(message),
         trace,
@@ -53,6 +50,10 @@ export class LoggerService {
   }
 
   verbose(message: string, ...args: unknown[]) {
-    this.logger.trace(this.formatMessage(message), ...args);
+    this.logger.verbose(this.formatMessage(message), ...args);
+  }
+
+  box(message: string, ...args: unknown[]) {
+    this.logger.box(this.formatMessage(message), ...args);
   }
 }
