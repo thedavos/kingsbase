@@ -33,16 +33,18 @@ export class LoggingInterceptor {
     const start = performance.now();
 
     try {
-      const duration = Math.round(performance.now() - start);
+      event.node.res.once('close', () => {
+        const duration = Math.round(performance.now() - start);
 
-      this.logger.log(
-        `Request completed: ${method} ${url}`,
-        {
-          requestId,
-          duration: `${duration}ms`,
-          status: 200,
-        },
-      );
+        this.logger.log(
+          `Request completed: ${method} ${url}`,
+          {
+            requestId,
+            duration: `${duration}ms`,
+            status: 200,
+          },
+        );
+      });
     }
     catch (e) {
       const error = e as KGError;
