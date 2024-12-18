@@ -3,7 +3,7 @@ import { commonFields, uuid } from './common.schema';
 
 export const leagues = sqliteTable('leagues', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  uuid: uuid().unique().notNull(),
+  uuid: uuid(),
   name: text('name').notNull(),
   slug: text('slug').notNull().unique(),
   country: text('country'),

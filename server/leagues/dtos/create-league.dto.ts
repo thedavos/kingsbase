@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createLeagueZod = z.object({
+export const leagueZodSchema = z.object({
   id: z.number().int().nonnegative(), // id must be a non-negative integer
   uuid: z.string().uuid(), // uuid must be a valid UUID
   name: z.string().min(1, 'Name is required'), // name must be a non-empty string
@@ -15,11 +15,13 @@ export const createLeagueZod = z.object({
   numberOfTeams: z.number().int().nonnegative(), // numberOfTeams must be a non-negative integer
   description: z.string().optional(), // description is optional
   rules: z.string().optional(), // rules is optional
-  isActive: z.boolean(), // isActive must be a boolean
-  isVisible: z.boolean(), // isVisible must be a boolean
-  createdAt: z.date(), // createdAt must be a date
+  isActive: z.boolean().optional(), // isActive must be a boolean
+  isVisible: z.boolean().optional(), // isVisible must be a boolean
+  createdAt: z.date().optional(), // createdAt must be a date
   updatedAt: z.date().optional(), // updatedAt must be a date if provided
 });
 
-export const createLeagueDto = createLeagueZod.omit({ id: true, uuid: true });
-export type CreateLeagueDto = z.infer<typeof createLeagueZod>;
+export const createLeagueZodSchema = leagueZodSchema.omit({ id: true, uuid: true, createdAt: true, updatedAt: true });
+
+export type LeagueDto = z.infer<typeof leagueZodSchema>;
+export type CreateLeagueDto = z.infer<typeof createLeagueZodSchema>;

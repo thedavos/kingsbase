@@ -8,9 +8,11 @@ import type { KGError } from 'server/common/types/errors.types';
 export class LoggingInterceptor {
   constructor(
     @inject(LoggerService) private readonly logger: LoggerService,
-  ) {}
+  ) {
+    this.logger.setContext('middleware');
+  }
 
-  async intercept(event: H3Event, next: () => Promise<unknown>) {
+  intercept(event: H3Event) {
     const requestId = randomUUID();
     const method = event.method;
     const url = event.path;
@@ -31,8 +33,6 @@ export class LoggingInterceptor {
     const start = performance.now();
 
     try {
-      const result = await next();
-
       const duration = Math.round(performance.now() - start);
 
       this.logger.log(
@@ -43,8 +43,6 @@ export class LoggingInterceptor {
           status: 200,
         },
       );
-
-      return result;
     }
     catch (e) {
       const error = e as KGError;
