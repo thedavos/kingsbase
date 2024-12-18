@@ -1,4 +1,4 @@
-import { container, delay } from 'tsyringe';
+import { container } from 'tsyringe';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 export type AppModule = {
@@ -7,6 +7,6 @@ export type AppModule = {
 };
 
 export const registerModule = (appModule: AppModule) => {
-  appModule.services?.forEach(service => container.registerSingleton(service.token, delay(() => service.provide)));
-  appModule.repositories?.forEach(repository => container.registerSingleton(repository.token, delay(() => repository.provide)));
+  appModule.services?.forEach(service => container.registerSingleton(service.provide));
+  appModule.repositories?.forEach(repository => container.registerSingleton(repository.provide));
 };
