@@ -24,6 +24,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-07-30',
 
   nitro: {
+    alias: {
+      consola: 'consola',
+    },
     experimental: {
       // Enable Server API documentation within NuxtHub
       openAPI: true,
@@ -31,6 +34,7 @@ export default defineNuxtConfig({
     },
     plugins: [
       'server/plugins/container',
+      'server/plugins/zod',
     ],
     esbuild: {
       options: {

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { useValidatedBody, useValidatedParams, z } from 'h3-zod';
+import { z } from 'zod';
+import { useValidatedBody, useValidatedParams } from 'h3-zod';
 import type { H3Error } from 'h3';
 import { LeaguesService } from 'server/leagues/leagues.service';
 import { updateLeagueZodSchema } from 'server/leagues/dtos/update-league.dto';

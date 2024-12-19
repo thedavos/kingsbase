@@ -29,7 +29,7 @@ export class BaseRepository<T> implements IRepository<T> {
     }
   }
 
-  async update(data: Partial<T>, filterBy: any): Promise<T> {
+  async update(data: Partial<T> = {}, filterBy: any): Promise<T> {
     try {
       this.logger.debug(`Updating in ${this.tableName}`, { data });
 

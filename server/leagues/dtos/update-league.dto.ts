@@ -1,6 +1,11 @@
 import type { z } from 'zod';
-import { nonEmptyObject } from 'server/utils/zod';
-import { leagueZodSchema } from './create-league.dto';
+import { createLeagueZodSchema } from './create-league.dto';
 
-export const updateLeagueZodSchema = nonEmptyObject.and(leagueZodSchema.partial());
+export const updateLeagueZodSchema = createLeagueZodSchema
+  .omit({ name: true, numberOfTeams: true, slug: true })
+  .optional()
+  .nonfalsy()
+  .isobject()
+  .haskeys();
+
 export type UpdateLeagueDto = z.infer<typeof updateLeagueZodSchema>;

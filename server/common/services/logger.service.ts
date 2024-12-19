@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { inspect } from 'util';
 import { singleton } from 'tsyringe';
-import { createConsola } from 'consola/basic';
+import { createConsola } from 'consola/core';
 import { box } from 'consola/utils';
 import chalk from 'chalk';
 import type { ChalkInstance } from 'chalk';
-import type { ConsolaInstance } from 'consola/basic';
+import type { ConsolaInstance } from 'consola/core';
 
 const formatConsoleDate = (date: Date | number): string => {
   const dateObj = new Date(date);
