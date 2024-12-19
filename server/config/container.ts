@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { DatabaseService } from 'server/database';
-import { LoggerService } from 'server/common/services/logger.service';
+import { LoggerService } from 'server/common/services';
 import { LoggingInterceptor } from 'server/common/interceptors/logging.interceptor';
 import leaguesModule from 'server/leagues/leagues.module';
 import { ImageService } from 'server/common/services/image.service';

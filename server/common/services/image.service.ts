@@ -4,7 +4,7 @@ import type { H3Event } from 'h3';
 import { inject, injectable } from 'tsyringe';
 import { logger } from 'server/common/decorators/logger.decorator';
 import { ImageRepository } from 'server/common/repositories/image.repository';
-import type { LoggerService } from 'server/common/services/logger.service';
+import type { LoggerService } from 'server/common/services';
 
 @logger('image.service')
 @injectable()

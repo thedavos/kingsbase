@@ -1,10 +1,10 @@
 import { container } from 'tsyringe';
-import { LoggerService } from 'server/common/services/logger.service';
+import { LoggerService } from 'server/common/services';
 
 export function logger(context?: string) {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   return function (target: any) {
-    const logger = container.resolve(LoggerService);
+    const logger: LoggerService = container.resolve(LoggerService);
     if (context) {
       logger.setContext(context);
     }

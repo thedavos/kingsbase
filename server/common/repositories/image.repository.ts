@@ -4,7 +4,7 @@ import { logger } from 'server/common/decorators/logger.decorator';
 import { BaseRepository } from 'server/common/repositories/base.repository';
 import type { Image } from 'server/database/schemas/images.schema';
 import { DatabaseService } from 'server/database';
-import { LoggerService } from 'server/common/services/logger.service';
+import { LoggerService } from 'server/common/services';
 import { images } from 'server/database/schemas/images.schema';
 
 @logger('image.repository')

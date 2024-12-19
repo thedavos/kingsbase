@@ -1,7 +1,7 @@
 import type { SQL } from 'drizzle-orm';
 import type { IRepository } from 'server/common/repositories/repository.interface';
 import type { DatabaseService } from 'server/database';
-import type { LoggerService } from 'server/common/services/logger.service';
+import type { LoggerService } from 'server/common/services';
 import type { KGError } from 'server/common/types/errors.types';
 
 export class BaseRepository<T> implements IRepository<T> {
@@ -25,6 +25,21 @@ export class BaseRepository<T> implements IRepository<T> {
     catch (e) {
       const error = e as KGError;
       this.logger.error(`Error creating in ${this.tableName}`, error.stack);
+      throw error;
+    }
+  }
+
+  async update(data: Partial<T>, filterBy: any): Promise<T> {
+    try {
+      this.logger.debug(`Updating in ${this.tableName}`, { data });
+
+      const recordUpdated = await this.db.value.update(this.table).set(data).where(filterBy).returning().get();
+
+      return recordUpdated as T;
+    }
+    catch (e) {
+      const error = e as KGError;
+      this.logger.error(`Error updating in ${this.tableName}`, error.stack);
       throw error;
     }
   }
