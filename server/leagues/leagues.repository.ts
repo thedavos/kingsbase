@@ -5,7 +5,7 @@ import { DatabaseService } from 'server/database';
 import { LoggerService } from 'server/common/services';
 import { leagues } from 'server/database/schemas/leagues.schema';
 import type { League } from 'server/database/schemas/leagues.schema';
-import type { LeagueWithImages } from 'server/database/schemas/relations.schema';
+import type { LeagueWithImages, LeaguesWithImages } from './leagues.types';
 
 @injectable()
 export class LeaguesRepository extends BaseRepository<League> {
@@ -19,7 +19,7 @@ export class LeaguesRepository extends BaseRepository<League> {
     this.logger.setContext('leagues');
   }
 
-  async findLeaguesWithImages() {
+  async findLeaguesWithImages(): Promise<LeaguesWithImages> {
     this.logger.debug(`Searching leagues with images`);
 
     const leaguesWithImages = await this.db.value.query.leagues.findMany({
@@ -30,10 +30,10 @@ export class LeaguesRepository extends BaseRepository<League> {
 
     this.logger.debug('Leagues with images founded: ', leaguesWithImages);
 
-    return leaguesWithImages as LeagueWithImages[];
+    return leaguesWithImages;
   }
 
-  async findLeagueWithImages(id: number) {
+  async findLeagueWithImages(id: number): Promise<LeagueWithImages | null> {
     this.logger.debug(`Searching league with images`);
 
     const leagueWithImages = await this.db.value.query.leagues.findFirst({
@@ -45,6 +45,6 @@ export class LeaguesRepository extends BaseRepository<League> {
 
     this.logger.debug('League with images founded: ', leagueWithImages);
 
-    return leagueWithImages as LeagueWithImages;
+    return leagueWithImages || null;
   }
 }
