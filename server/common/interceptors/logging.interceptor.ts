@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import type { H3Event } from 'h3';
 import { injectable, inject } from 'tsyringe';
-import { LoggerService } from 'server/common/services/logger.service';
+import { LoggerService } from 'server/common/services';
 import type { KGError } from 'server/common/types/errors.types';
 
 @injectable()

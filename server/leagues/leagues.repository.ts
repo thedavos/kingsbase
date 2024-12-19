@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
 import { BaseRepository } from 'server/common/repositories/base.repository';
 import { DatabaseService } from 'server/database';
-import { LoggerService } from 'server/common/services/logger.service';
+import { LoggerService } from 'server/common/services';
 import { leagues } from 'server/database/schemas/leagues.schema';
 import type { League } from 'server/database/schemas/leagues.schema';
 
