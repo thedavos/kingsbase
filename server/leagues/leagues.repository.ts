@@ -1,13 +1,11 @@
 import 'reflect-metadata';
 import { inject, injectable } from 'tsyringe';
-import { logger } from 'server/common/decorators/logger.decorator';
 import { BaseRepository } from 'server/common/repositories/base.repository';
-import type { League } from 'server/database/schemas/leagues.schema';
-import { leagues } from 'server/database/schemas/leagues.schema';
 import { DatabaseService } from 'server/database';
 import { LoggerService } from 'server/common/services/logger.service';
+import { leagues } from 'server/database/schemas/leagues.schema';
+import type { League } from 'server/database/schemas/leagues.schema';
 
-@logger('leagues.repository')
 @injectable()
 export class LeaguesRepository extends BaseRepository<League> {
   constructor(
@@ -17,6 +15,7 @@ export class LeaguesRepository extends BaseRepository<League> {
     super(db, logger);
     this.tableName = 'leagues';
     this.table = leagues;
+    this.logger.setContext('leagues');
   }
 
   findManyWithImages(): Promise<League[]> {

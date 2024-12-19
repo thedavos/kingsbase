@@ -1,5 +1,6 @@
 import type { H3Error } from 'h3';
 import type { ZodError } from 'zod';
+import { getStatusText } from './statusCode';
 
 export const Error400 = (error: H3Error) => {
   const zodData = error.data as ZodError;
@@ -8,7 +9,7 @@ export const Error400 = (error: H3Error) => {
   throw createError({
     name: error.name,
     statusCode: 400,
-    statusMessage: error.statusMessage || 'Bad Request',
+    statusMessage: error.statusMessage || getStatusText(400),
     stack: error.stack,
     data: {
       name: zodName,
@@ -20,7 +21,7 @@ export const Error400 = (error: H3Error) => {
 export const Error404 = (error: H3Error) => {
   throw createError({
     statusCode: 404,
-    statusMessage: 'Not Found',
+    statusMessage: getStatusText(404),
     stack: error.stack,
     data: { message: error.message },
   });
@@ -29,7 +30,7 @@ export const Error404 = (error: H3Error) => {
 export const Error500 = (error: H3Error) => {
   throw createError({
     statusCode: 500,
-    statusMessage: 'Internal Server Error',
+    statusMessage: getStatusText(500),
     stack: error.stack,
     data: { message: error.message || 'An unexpected error occurred' },
   });

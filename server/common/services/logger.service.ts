@@ -118,7 +118,7 @@ export class LoggerService {
   error(message: string, trace?: string, ...args: string[] | any[]) {
     this.logger.error(
       {
-        msg: message,
+        message,
         trace,
       },
       ...args,

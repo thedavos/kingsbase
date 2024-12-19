@@ -15,11 +15,18 @@ export class BaseRepository<T> implements IRepository<T> {
   ) {}
 
   async create(data: Partial<T>): Promise<T> {
-    this.logger.debug(`Creating in ${this.tableName}`, { data });
+    try {
+      this.logger.debug(`Creating in ${this.tableName}`, { data });
 
-    const recordCreated = (await this.db.value.insert(this.table).values(data).returning())[0];
+      const recordCreated = (await this.db.value.insert(this.table).values(data).returning())[0];
 
-    return recordCreated as T;
+      return recordCreated as T;
+    }
+    catch (e) {
+      const error = e as KGError;
+      this.logger.error(`Error creating in ${this.tableName}`, error.stack);
+      throw error;
+    }
   }
 
   async findAll(query: SQL | undefined = undefined): Promise<T[]> {
