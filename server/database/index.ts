@@ -15,6 +15,27 @@ export type IncludeRelation<TableName extends keyof TSchema> = DBQueryConfig<
   TSchema[TableName]
 >['with'];
 
+export type IncludeColumns<TableName extends keyof TSchema> =
+  DBQueryConfig<
+    'one' | 'many',
+    boolean,
+    TSchema,
+    TSchema[TableName]
+  >['columns'];
+
+export type InferQueryModel<
+  TableName extends keyof TSchema,
+  Columns extends IncludeColumns<TableName> | undefined = undefined,
+  With extends IncludeRelation<TableName> | undefined = undefined,
+> = BuildQueryResult<
+  TSchema,
+  TSchema[TableName],
+  {
+    columns: Columns;
+    with: With;
+  }
+>;
+
 export type InferResultType<
   TableName extends keyof TSchema,
   With extends IncludeRelation<TableName> | undefined = undefined,
