@@ -11,8 +11,24 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@nuxt/eslint',
   ],
+
+  components: {
+    dirs: [
+      '~/components',
+      {
+        path: '~/shared/components',
+        global: true,
+        prefix: '',
+        pathPrefix: false,
+      },
+    ],
+  },
   // Development
   devtools: { enabled: true },
+
+  css: [
+    '~/assets/css/main.css',
+  ],
 
   alias: {
     server: fileURLToPath(new URL('./server/', import.meta.url)),
