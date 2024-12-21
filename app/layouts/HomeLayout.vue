@@ -15,14 +15,9 @@ export default {
   <div class="home-layout">
     <KMain class="min-h-screen">
       <KHeader
-        :ui="{ wrapper: 'bg-transparent static' }"
-      >
-        <template
-          #logo
-        >
-          Kingsbase
-        </template>
-      </KHeader>
+        :ui="{ wrapper: 'bg-transparent static', container: 'justify-center', left: '', right: '' }"
+        title="Kingsbase"
+      />
       <UContainer
         :ui="{ constrained: 'max-w-5xl' }"
         class="flex flex-col justify-center"
