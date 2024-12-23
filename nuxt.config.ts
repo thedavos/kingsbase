@@ -10,6 +10,9 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     'nuxt-auth-utils',
     '@nuxt/eslint',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
   ],
 
   components: {
@@ -17,6 +20,12 @@ export default defineNuxtConfig({
       '~/components',
       {
         path: '~/shared/components',
+        global: true,
+        prefix: '',
+        pathPrefix: false,
+      },
+      {
+        path: '~/admin/components',
         global: true,
         prefix: '',
         pathPrefix: false,

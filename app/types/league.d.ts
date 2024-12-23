@@ -1,20 +1,21 @@
 import type { Image } from './image';
+import type { Nullable } from '@/types/utils';
 
 export type League = {
   id: number;
   uuid: string;
   name: string;
   slug: string;
-  country: string | null;
-  city: string | null;
-  logo: string | null;
-  foundationYear: number | null;
-  website: string | null;
-  twitterHandle: string | null;
-  instagramHandle: string | null;
+  country: Nullable<string>;
+  city: Nullable<string>;
+  logo: Nullable<string>;
+  foundationYear: Nullable<number>;
+  website: Nullable<string>;
+  twitterHandle: Nullable<string>;
+  instagramHandle: Nullable<string>;
   numberOfTeams: number;
-  description: string | null;
-  rules: string | null;
+  description: Nullable<string>;
+  rules: Nullable<string>;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
