@@ -94,4 +94,20 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  image: {
+    providers: {
+      nuxthub: {
+        name: 'nuxthub',
+        provider: '~/providers/nuxthub.image.ts',
+        options: {
+          baseURL: '/images',
+        },
+      },
+    },
+  },
+
+  pinia: {
+    storesDirs: ['./stores/**', './services/**'],
+  },
 });

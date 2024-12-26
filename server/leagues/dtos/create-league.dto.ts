@@ -5,9 +5,10 @@ export const leagueZodSchema = z.object({
   uuid: z.string().uuid(), // uuid must be a valid UUID
   name: z.string().min(1, 'Name is required'), // name must be a non-empty string
   slug: z.string().min(1, 'Slug is required'), // slug must be a non-empty string
+  abbr: z.string().optional(), // abbreviation is optional
   country: z.string().optional(), // country is optional
   city: z.string().optional(), // city is optional
-  logo: z.string().url().optional(), // logo must be a valid URL if provided
+  logo: z.string().optional(), // logo is a pathname and is optional
   foundationYear: z.number().int().optional(), // foundationYear must be an integer if provided
   website: z.string().url().optional(), // website must be a valid URL if provided
   twitterHandle: z.string().optional(), // twitterHandle is optional

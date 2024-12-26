@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { useLeagueStore } from '@/services/useLeagueStore';
+import DashboardLeagueCard from '~/admin/components/DashboardLeagueCard.vue';
 
 definePageMeta({
   layout: 'admin-layout',
 });
 
-const { leagues, size, getLeagues } = useLeagueStore();
+const leagueStore = useLeagueStore();
+const { leagues, size } = storeToRefs(leagueStore);
 
 const q = ref('');
 const input = ref<{ input: HTMLInputElement }>();
 
-// getLeagues();
-await useAsyncData(() => getLeagues().then(() => true));
+useAsyncData(() => leagueStore.getLeagues().then(() => true));
 
 defineShortcuts({
   '/': () => {
@@ -58,18 +59,11 @@ export default {
       </DashboardNavbar>
 
       <div class="leagues-cards">
-        <DashboardCard
+        <DashboardLeagueCard
           v-for="league in leagues"
           :key="league.uuid"
-          :title="league.name"
-          :description="league.logo || ''"
-          class="cursor-pointer"
-        >
-          <NuxtImg
-            v-if="league.logo"
-            :src="league.logo"
-          />
-        </DashboardCard>
+          :league="league"
+        />
       </div>
     </DashboardPanel>
   </DashboardPage>
@@ -81,6 +75,6 @@ export default {
   grid-gap: 16px;
   padding: 24px;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 </style>

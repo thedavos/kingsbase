@@ -6,6 +6,7 @@ export type League = {
   uuid: string;
   name: string;
   slug: string;
+  abbr: Nullable<string>;
   country: Nullable<string>;
   city: Nullable<string>;
   logo: Nullable<string>;

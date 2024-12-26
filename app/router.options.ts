@@ -67,7 +67,6 @@ export default <RouterConfig>{
   },
 
   routes: (readonlyRoutes) => {
-    console.log('readonlyRoutes: ', readonlyRoutes);
     return [
       ...readonlyRoutes,
       {

@@ -5,6 +5,5 @@ export default eventHandler(async (event) => {
     pathname: z.string().min(1),
   }).parse);
 
-  setHeader(event, 'Content-Security-Policy', 'default-src \'none\';');
   return hubBlob().serve(event, pathname);
 });

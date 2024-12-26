@@ -6,6 +6,7 @@ export const leagues = sqliteTable('leagues', {
   uuid: uuid(),
   name: text('name').notNull(),
   slug: text('slug').notNull().unique(),
+  abbr: text('abbr'),
   country: text('country'),
   city: text('city'),
   logo: text('logo'),
