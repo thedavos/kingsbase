@@ -3,6 +3,8 @@ import type { League } from '@/types/league';
 import type { Nullable } from '@/types/utils';
 
 export const useLeagueStore = defineStore('useLeagueStore', () => {
+  const toast = useToast();
+
   // one
   const league = ref<Nullable<League>>(null);
 
@@ -25,13 +27,52 @@ export const useLeagueStore = defineStore('useLeagueStore', () => {
     try {
       loading.value = true;
       error.value = null;
+
       const response = await useFetch<League[]>('/api/leagues');
       leagues.value = response.data.value as League[];
       size.value = leagues.value.length;
       hasEntries.value = size.value > 0;
+
+      toast.add({
+        title: 'Ligas cargadas',
+        description: `Se encontraron ${size.value} ligas`,
+        icon: 'i-heroicons-check-circle-20-solid',
+        color: 'primary',
+      });
     }
     catch (e) {
       error.value = e as Error;
+      throw error;
+    }
+    finally {
+      loading.value = false;
+    }
+  };
+
+  const createLeague = async (leagueData: Partial<League>) => {
+    try {
+      loading.value = true;
+      error.value = null;
+
+      const response = await $fetch<ResponseData<League>>('/api/leagues', {
+        method: 'POST',
+        body: leagueData,
+      });
+
+      const newLeague = response.data;
+      hasEntries.value = true;
+      league.value = newLeague;
+
+      toast.add({
+        title: 'Liga creada',
+        description: `La liga "${newLeague.name}" ha sido creada exitosamente`,
+        icon: 'i-heroicons-check-circle-20-solid',
+        color: 'primary',
+      });
+    }
+    catch (e) {
+      error.value = e as Error;
+      throw error;
     }
     finally {
       loading.value = false;
@@ -47,5 +88,6 @@ export const useLeagueStore = defineStore('useLeagueStore', () => {
     loading,
     leaguesMap,
     getLeagues,
+    createLeague,
   };
 });

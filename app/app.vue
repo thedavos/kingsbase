@@ -22,10 +22,11 @@ useSeoMeta({
     <NuxtPage />
   </NuxtLayout>
   <UNotifications />
+  <UModals />
 </template>
 
 <style lang="postcss">
 body {
-  @apply antialiased text-foreground font-sans text-gray-950 bg-gradient-to-t from-blue-800 to-cool-950 dark:bg-gray-950 dark:text-gray-50;
+  @apply antialiased font-sans text-gray-950 bg-gradient-to-t from-blue-800 to-cool-950 dark:bg-gray-950 dark:text-gray-50;
 }
 </style>
