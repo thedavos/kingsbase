@@ -12,8 +12,6 @@ const { leagues, size } = storeToRefs(leagueStore);
 const q = ref('');
 const input = ref<{ input: HTMLInputElement }>();
 
-useAsyncData(() => leagueStore.getLeagues().then(() => true));
-
 defineShortcuts({
   '/': () => {
     input.value?.input?.focus();
