@@ -11,7 +11,7 @@ export const useImageStore = defineStore('useImageStore', () => {
 
   // Validaciones
   const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB
-  const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
+  const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/webp'];
 
   const validateFile = (file: File): boolean => {
     // Validar que existe archivo

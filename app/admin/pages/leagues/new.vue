@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { z } from 'zod';
-import { templateRef, useDebounceFn, useObjectUrl } from '@vueuse/core';
+import { templateRef, useObjectUrl } from '@vueuse/core';
+import { useDebounceFn } from '@vueuse/shared';
 import type { BlobObject } from '@nuxthub/core';
 import type { FormSubmitEvent } from '#ui/types';
 import { useFileSelection } from '@/shared/composables/useFileSelection';
@@ -31,7 +32,7 @@ async function onFilesHandler(files: FileList | File[] | null): Promise<void> {
   }
 
   file.value = files[0];
-  imageSource.value = useObjectUrl(files[0] as File);
+  imageSource.value = useObjectUrl(files[0] as File).value as string;
 }
 
 const { chooseFiles, isOverDropZone } = useFileSelection({
@@ -57,8 +58,6 @@ const createLeagueSchema = z.object({
   rules: z.string(),
   isActive: z.boolean(),
 });
-
-type CreateLeagueSchema = z.output<typeof createLeagueSchema>;
 
 const state = reactive({
   name: '',
@@ -101,6 +100,7 @@ watch(() => state.slug, () => {
   isSlugManuallyEdited.value = state.slug !== expectedSlug;
 });
 
+type CreateLeagueSchema = z.output<typeof createLeagueSchema>;
 async function onSubmit(event: FormSubmitEvent<CreateLeagueSchema>) {
   event.preventDefault();
 
@@ -151,29 +151,32 @@ export default {
       </DashboardNavbar>
 
       <DashboardPanelContent>
-        <UModal v-model="isLogoModalOpen">
-          <UButtonGroup
-            size="lg"
-            orientation="horizontal"
-            class="py-4 justify-center"
-          >
-            <UButton
-              label="Escoge tu imagen"
-              icon="i-heroicons-photo"
-              color="white"
-              variant="solid"
-              class="mr-1"
-              @click="openGallery"
-            />
-            <UButton
-              label="Sube tu imagen"
-              icon="i-heroicons-arrow-up-tray"
-              color="white"
-              variant="solid"
-              @click="uploadFile"
-            />
-          </UButtonGroup>
-        </UModal>
+        <DashboardModal
+          v-model="isLogoModalOpen"
+          title="Imágenes"
+          description="Escoge tu imagen desde la galería en la nube o sube tu imagen desde tu computadora"
+          icon="i-heroicons-photo"
+        >
+          <template #footer>
+            <div class="grid grid-cols-2 gap-2 p-4">
+              <UButton
+                label="Sube"
+                size="lg"
+                icon="i-heroicons-arrow-up-tray"
+                color="white"
+                variant="solid"
+                @click="uploadFile"
+              />
+              <UButton
+                label="Galería"
+                size="lg"
+                color="white"
+                variant="ghost"
+                @click="openGallery"
+              />
+            </div>
+          </template>
+        </DashboardModal>
 
         <UModal v-model="isGalleryModalOpen">
           <UCard>

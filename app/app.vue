@@ -21,8 +21,11 @@ useSeoMeta({
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
-  <UNotifications />
-  <UModals />
+
+  <ClientOnly>
+    <UNotifications />
+    <UModals />
+  </ClientOnly>
 </template>
 
 <style lang="postcss">

@@ -10,7 +10,7 @@ const { isHelpSlideoverOpen } = useDashboard();
 const leagueStore = useLeagueStore();
 const { leagues } = storeToRefs(leagueStore);
 
-useAsyncData(() => leagueStore.getLeagues().then(() => true));
+await useLazyAsyncData(() => leagueStore.getLeagues().then(() => true));
 
 const footerLinks = [{
   label: 'Invite people',
@@ -39,7 +39,7 @@ const groups = [{
   }],
 }] as Group[];
 
-const sidebarLeagues = computed(() => leagues.value.map(league => ({ label: league.name })));
+const sidebarLeagues = computed(() => leagues.value.map(league => ({ label: league.name, to: { name: 'leagues-teams', params: { uuid: league.uuid } } })));
 </script>
 
 <script lang="ts">

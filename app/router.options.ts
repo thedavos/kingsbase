@@ -93,14 +93,14 @@ export default <RouterConfig>{
           layout: 'admin-layout',
         },
       },
+      {
+        name: 'leagues-teams',
+        path: '/admin/leagues/:uuid/teams',
+        component: () => import('@/admin/pages/leagues/teams.vue'),
+        meta: {
+          layout: 'admin-layout',
+        },
+      },
     ];
   },
-
-  // routes: [
-  //   {
-  //     name: 'admin',
-  //     path: '/admin'
-  //     component: () => import('./admin/pages/index.vue'),
-  //   },
-  // ],
 };

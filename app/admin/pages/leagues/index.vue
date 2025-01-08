@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useLeagueStore } from '@/services/useLeagueStore';
 import DashboardLeagueCard from '~/admin/components/DashboardLeagueCard.vue';
+import type { League } from '@/types/league';
 
 definePageMeta({
   layout: 'admin-layout',
 });
 
+const router = useRouter();
 const leagueStore = useLeagueStore();
 const { leagues, size } = storeToRefs(leagueStore);
 
@@ -17,6 +19,10 @@ defineShortcuts({
     input.value?.input?.focus();
   },
 });
+
+const onLeagueCard = (league: League) => {
+  router.push({ name: 'leagues-teams', params: { uuid: league.uuid } });
+};
 </script>
 
 <script lang="ts">
@@ -61,6 +67,7 @@ export default {
           v-for="league in leagues"
           :key="league.uuid"
           :league="league"
+          @click="onLeagueCard(league)"
         />
       </div>
     </DashboardPanel>

@@ -13,7 +13,7 @@ export default eventHandler(async (event) => {
     },
     ensure: {
       maxSize: '8MB',
-      types: ['image/png', 'image/jpeg'],
+      types: ['image/png', 'image/jpeg', 'image/webp'],
     },
   });
 });

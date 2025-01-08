@@ -24,7 +24,7 @@ export class LeaguesService {
     return this.leaguesRepository.update(data, eq(leagues.uuid, uuid));
   }
 
-  updateLeagueByid(id: number, data: UpdateLeagueDto) {
+  updateLeagueById(id: number, data: UpdateLeagueDto) {
     return this.leaguesRepository.update(data, eq(leagues.id, id));
   }
 }
