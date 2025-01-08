@@ -5,6 +5,8 @@ import type { CreateLeagueDto } from 'server/leagues/dtos/create-league.dto';
 import type { UpdateLeagueDto } from 'server/leagues/dtos/update-league.dto';
 import type { League } from 'server/database/schemas/leagues.schema';
 import { leagues } from 'server/database/schemas/leagues.schema';
+import getQueryOperators from 'server/utils/getQueryOperators';
+import type { SQL } from 'drizzle-orm';
 
 @injectable()
 export class LeaguesService {
@@ -18,6 +20,13 @@ export class LeaguesService {
 
   getLeagues(): Promise<League[]> {
     return this.leaguesRepository.findAll();
+  }
+
+  getLeague(query: Record<string, any>): Promise<League | null> {
+    return this.leaguesRepository.findOneWithQuery((table) => {
+      const operators = getQueryOperators({ query, table });
+      return and(...operators) as SQL;
+    });
   }
 
   updateLeagueByUuid(uuid: string, data: UpdateLeagueDto) {

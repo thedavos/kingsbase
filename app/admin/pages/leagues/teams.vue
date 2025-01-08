@@ -17,11 +17,12 @@ defineShortcuts({
 });
 
 const teamStore = useTeamStore();
-const { teams, loading, size } = storeToRefs(teamStore);
+const { teams, loading, size, query } = storeToRefs(teamStore);
 
 const leagueStore = useLeagueStore();
-const { leaguesMap } = storeToRefs(leagueStore);
+const { leaguesMap, leagues } = storeToRefs(leagueStore);
 const uuid = useRouteParams('uuid', null);
+query.value.luuid = uuid.value;
 
 const isNewTeamModalOpen = ref(false);
 const q = ref('');
@@ -34,7 +35,10 @@ await useLazyAsyncData(() => teamStore.getTeams().then(() => true));
 
 const columns = computed(() => defaultTeamColumns.filter(column => selectedColumns.value.includes(column)));
 const league = computed(() => uuid.value ? leaguesMap.value.get(uuid.value) : null);
-const teamRows = computed(() => teams.value.map(team => ({ ...team, league: league.value || null })));
+const teamRows = computed(() => teams.value.map(team => ({
+  ...team,
+  league: team?.leagueId ? leagues.value?.find(league => team.leagueId === league.id) || null : null,
+})));
 </script>
 
 <script lang="ts">

@@ -16,6 +16,7 @@ export const useTeamStore = defineStore('useTeamStore', () => {
   // common
   const loading = ref<boolean>(false);
   const error = ref<Nullable<Error | string>>(null);
+  const query = ref<Record<string, any>>({});
 
   const teamsMap = computed<Map<string, Team>>(() => {
     const map = new Map<string, Team>();
@@ -28,7 +29,10 @@ export const useTeamStore = defineStore('useTeamStore', () => {
       loading.value = true;
       error.value = null;
 
-      const response = await useFetch<Team[]>('/api/teams');
+      const response = await useFetch<Team[]>('/api/teams', {
+        query: query.value,
+      });
+
       teams.value = response.data.value as Team[];
       size.value = teams.value.length;
       hasEntries.value = size.value > 0;
@@ -63,6 +67,7 @@ export const useTeamStore = defineStore('useTeamStore', () => {
       hasEntries.value = true;
       team.value = newTeam;
       teams.value.push(newTeam);
+      size.value = teams.value.length;
 
       toast.add({
         title: 'Equipo creado',
@@ -84,6 +89,7 @@ export const useTeamStore = defineStore('useTeamStore', () => {
     team,
     teams,
     size,
+    query,
     hasEntries,
     error,
     loading,

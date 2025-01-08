@@ -101,6 +101,14 @@ export default <RouterConfig>{
           layout: 'admin-layout',
         },
       },
+      {
+        name: 'teams',
+        path: '/admin/teams',
+        component: () => import('@/admin/pages/leagues/teams.vue'),
+        meta: {
+          layout: 'admin-layout',
+        },
+      },
     ];
   },
 };

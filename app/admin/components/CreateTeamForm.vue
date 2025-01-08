@@ -69,6 +69,7 @@ const createTeamSchema = z.object({
   foundationYear: z.string().transform(Number),
   budget: z.string().transform(Number).optional(),
   isActive: z.boolean(),
+  leagueId: z.number().optional(),
 });
 
 const leagueSelectOptions = computed(() => {
@@ -86,10 +87,6 @@ const leagueSelectOptions = computed(() => {
     },
     ...leaguesOptions,
   ];
-});
-
-onMounted(() => {
-  if (props.league) state.leagueId = props.league.id;
 });
 
 watch(
@@ -138,6 +135,11 @@ async function onSubmit(event: FormSubmitEvent<CreateTeamSchema>) {
     const pathname = image?.pathname || '';
     state.logo = pathname;
     event.data.logo = pathname;
+  }
+
+  if (props.league) {
+    state.leagueId = props.league.id;
+    event.data.leagueId = props.league.id;
   }
 
   const newTeamData = event.data;

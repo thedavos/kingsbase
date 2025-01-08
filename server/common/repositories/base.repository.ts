@@ -6,7 +6,7 @@ import type { KGError } from 'server/common/types/errors.types';
 
 export class BaseRepository<T> implements IRepository<T> {
   protected tableName: string;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
+
   protected table: any;
 
   constructor(
@@ -50,6 +50,24 @@ export class BaseRepository<T> implements IRepository<T> {
     const records = await this.db.value.select().from(this.table).where(query).all();
 
     return records as T[];
+  }
+
+  async findWithQuery(queryCallback: (table: any) => SQL) {
+    this.logger.debug(`Searching in ${this.tableName}`);
+    const query = queryCallback(this.table);
+
+    const records = await this.db.value.select().from(this.table).where(query).all();
+
+    return records as T[];
+  }
+
+  async findOneWithQuery(queryCallback: (table: any) => SQL): Promise<T | null> {
+    this.logger.debug(`Searching in ${this.tableName}`);
+    const query = queryCallback(this.table);
+
+    const records = await this.db.value.select().from(this.table).where(query).get();
+
+    return records as T;
   }
 
   async findOne(id: number): Promise<T | null> {
